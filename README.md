@@ -1,48 +1,36 @@
 # docker-compose-laravel
 
-A docker-compose workflow that sets up a network of containers for local Symfony development.
+A pretty simplified docker-compose workflow that sets up a LEMP network of containers for local Laravel development.
 
 ### Install Docker
 
 To get started, make sure you have Docker installed on your system, and then clone this repository.
 
-### Create a Symfony app
+### Create a Laravel app
 
-Creating a new Symfony application is handled by spinning up a Docker container to generate it.
-Keep the project name symfony (the last argument), as the containers expect to use that folder.
-Different Symfony versions can be used by appending a version number, e.g. `--version=5.2`.
+Creating a new Laravel application is handled by spinning up a Composer Docker container to generate it.
+Keep the project name laravel (the last argument), as the containers expect to use that folder.
+Different Laravel versions can be used by appending a version number, e.g. `laravel/laravel:5.2.29`.
 
-``` sh
-docker-compose run --rm php composer create-project symfony/skeleton .
 ```
-If a full-on webapp is needed:
-``` sh
-docker-compose run --rm php composer require webapp
+docker-compose run --rm php composer create-project --prefer-dist laravel/laravel .
 ```
 
-Alternativelty, a new project can be made with Composer as well, like below:
+### Configure Laravel
 
-``` sh
-docker-compose run --rm php composer create-project symfony/skeleton:4.3.99 .
-```
-
-### Connect to the database
-
-Modify the database credentials in the `src/.env` file to connect to the database container.
-Find examples below:
-```
-DATABASE_URL="mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:${MYSQL_PORT}/${MYSQL_DATABASE}?serverVersion=${MYSQL_VERSION}"
-DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}?serverVersion=${POSTGRES_VERSION}&charset=utf8"
-```
+Update the following in the Laravel `.env` file:
+`DB_CONNECTION=postgres`
+`DB_HOST=postgres`
+`APP_URL=http://localhost:4200`
 
 ### Start the containers
 
-From the respository's root run `docker-compose up -d --build`. Open up your browser of choice to [http://localhost:8080](http://localhost:8080) and you should see your Symfony app running as intended.
+From the respository's root run `docker-compose up -d --build`. Open up your browser of choice to [http://localhost:4200](http://localhost:4200) and you should see your Laravel app running as intended.
 
-Additional commands can be run from the command line, like adding composer packages, run tests. Some examples are shown below.
-
-- `docker-compose run --rm php composer require http-client doctrine maker phpunit`
-- `docker-compose run --rm php php bin/phpunit tests/`
+- `docker-compose run --rm php composer update`
+- `docker-compose run --rm php artisan migrate`
+- `docker-compose run --rm php phpunit` or `docker-compose run --rm php phpunit --filter insert_test_name_here`
+- `docker-compose run --rm npm run dev`
 
 Containers created and their ports (if used) are as follows:
 
@@ -55,4 +43,3 @@ Containers created and their ports (if used) are as follows:
 
 ### Resources
 
-- [Creating Symfony applications](https://symfony.com/doc/current/setup.html#creating-symfony-applications)
