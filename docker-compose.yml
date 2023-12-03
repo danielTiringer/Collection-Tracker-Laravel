@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: dev
+    user: "${UID}:${GID}"
+    container_name: ${PROJECT_NAME}-application
+    environment:
+      - WEB_DOCUMENT_ROOT=/var/www/html
+    env_file:
+      - .env
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "${WEBSERVER_PORT}:8080"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    networks:
+      - collections
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION}-alpine
+    container_name: ${PROJECT_NAME}-postgresql
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+    volumes:
+      - collections-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT}:5432"
+    networks:
+      - collections
+
+networks:
+  collections:
+
+volumes:
+  collections-postgres-data:
