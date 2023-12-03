@@ -19,7 +19,7 @@ docker-compose run --rm php composer create-project --prefer-dist laravel/larave
 ### Configure Laravel
 
 Update the following in the Laravel `.env` file:
-`DB_CONNECTION=postgres`
+`DB_CONNECTION=pgsql`
 `DB_HOST=postgres`
 `APP_URL=http://localhost:4200`
 

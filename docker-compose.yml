@@ -28,7 +28,7 @@ services:
     container_name: ${PROJECT_NAME}-postgresql
     environment:
       POSTGRES_DB: ${DB_DATABASE}
-      POSTGRES_USER: ${DB_USER}
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     env_file:
       - .env
