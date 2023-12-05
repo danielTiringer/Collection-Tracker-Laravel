@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @mixin Builder
+ * @property string $name
+ * @property string $description
+ * @porperty int $goal
+ * @property string $image
  */
 class CollectionEntity extends Model
 {

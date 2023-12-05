@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class CollectionEntityController extends Controller
 {
@@ -42,8 +43,15 @@ class CollectionEntityController extends Controller
     {
         $validatedFormFields = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $validatedFormFields['image'] = $request->file('image')->store('images', 'public');
+        if ($request->hasFile('image_file')) {
+            $newImage = $request->file('image_file')->store('images', 'public');
+            if (!$newImage) {
+                return redirect()
+                    ->route('collections.index')
+                    ->with('error', 'Collection creation failed');
+            }
+
+            $validatedFormFields['image'] = $newImage;
         }
 
         (new CollectionEntity)->create($validatedFormFields);
@@ -66,24 +74,59 @@ class CollectionEntityController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CollectionEntity $collectionEntity)
+    public function edit(CollectionEntity $collection): View|Application|Factory|ContractsApplication
     {
-        //
+        return view('collection_entity.edit', [
+            'collection' => $collection,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCollectionEntityRequest $request, CollectionEntity $collectionEntity)
+    public function update(UpdateCollectionEntityRequest $request, CollectionEntity $collection): RedirectResponse
     {
-        //
+        $validatedFormFields = $request->validated();
+
+        if ($request->hasFile('image_file')) {
+            $oldImageRemoved = Storage::disk('public')->delete($collection->image);
+            if (!$oldImageRemoved) {
+                return redirect()
+                    ->route('collections.show', $collection)
+                    ->with('error', 'Collection update failed');
+            }
+
+            $newImage = $request->file('image_file')->store('images', 'public');
+            if (!$newImage) {
+                return redirect()
+                    ->route('collections.show', $collection)
+                    ->with('error', 'Collection update failed');
+            }
+
+            $validatedFormFields['image'] = $newImage;
+        }
+
+        $collection->update($validatedFormFields);
+
+        return redirect()
+            ->route('collections.show', $collection)
+            ->with('success', 'Collection created successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CollectionEntity $collectionEntity)
+    public function destroy(CollectionEntity $collection): RedirectResponse
     {
-        //
+        $collectionDeleted = $collection->delete();
+        if (!$collectionDeleted) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'Collection deletion failed');
+        }
+
+        return redirect()
+            ->route('collections.index')
+            ->with('success', 'Collection created successfully');
     }
 }

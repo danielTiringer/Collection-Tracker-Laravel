@@ -35,12 +35,12 @@ class StoreCollectionEntityRequest extends FormRequest
                 'nullable',
                 'integer',
             ],
-            'image' => [
+            'image_file' => [
                 'nullable',
                 File::image()
                     ->min('1kb')
                     ->max('10mb'),
-            ]
+            ],
         ];
     }
 }
