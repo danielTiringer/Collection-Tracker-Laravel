@@ -8,7 +8,7 @@
             </h2>
         </header>
 
-        <form method="POST" action="{{ route('collections.store') }}">
+        <form method="POST" action="{{ route('collections.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="mb-6">
                 <label
@@ -66,16 +66,19 @@
                 @enderror
             </div>
 
-{{--            <div class="mb-6">--}}
-{{--                <label for="image" class="inline-block text-lg mb-2">--}}
-{{--                    Collection Image--}}
-{{--                </label>--}}
-{{--                <input--}}
-{{--                    type="file"--}}
-{{--                    class="border border-gray-200 rounded p-2 w-full"--}}
-{{--                    name="image"--}}
-{{--                />--}}
-{{--            </div>--}}
+            <div class="mb-6">
+                <label for="image" class="inline-block text-lg mb-2">
+                    Collection Image
+                </label>
+                <input
+                    type="file"
+                    class="border border-gray-200 rounded p-2 w-full"
+                    name="image"
+                />
+                @error('image')
+                    <p class="text-red-500 text-xs mb-1">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="mb-6 flex justify-between">
                 <a href="{{ route('collections.index') }}" class="text-black ml-4"> Back </a>

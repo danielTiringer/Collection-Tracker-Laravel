@@ -42,6 +42,10 @@ class CollectionEntityController extends Controller
     {
         $validatedFormFields = $request->validated();
 
+        if ($request->hasFile('image')) {
+            $validatedFormFields['image'] = $request->file('image')->store('images', 'public');
+        }
+
         (new CollectionEntity)->create($validatedFormFields);
 
         return redirect()

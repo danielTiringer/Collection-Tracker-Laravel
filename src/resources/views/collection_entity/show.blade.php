@@ -15,7 +15,7 @@
                 <div class="flex flex-row">
                     <img
                         class="w-48 mr-6 mb-6"
-                        src="{{ asset('images/no-image.png') }}"
+                        src="{{ $collection->image ? asset('storage/' . $collection->image) : asset('images/no-image.png') }}"
                         alt=""
                     />
                     <div class="flex items-center">

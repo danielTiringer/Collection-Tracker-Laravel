@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class StoreCollectionEntityRequest extends FormRequest
 {
@@ -34,6 +35,12 @@ class StoreCollectionEntityRequest extends FormRequest
                 'nullable',
                 'integer',
             ],
+            'image' => [
+                'nullable',
+                File::image()
+                    ->min('1kb')
+                    ->max('10mb'),
+            ]
         ];
     }
 }

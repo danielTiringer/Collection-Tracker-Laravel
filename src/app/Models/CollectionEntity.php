@@ -17,5 +17,6 @@ class CollectionEntity extends Model
         'name',
         'description',
         'goal',
+        'image',
     ];
 }
