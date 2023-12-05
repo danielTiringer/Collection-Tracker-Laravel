@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description');
-            $table->integer('goal');
+            $table->integer('goal')->nullable();
             $table->timestamps();
         });
     }
