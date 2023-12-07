@@ -22,8 +22,11 @@ route::post('/login', [UserController::class, 'auth'])->name('users.auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [CollectionEntityController::class, 'index']);
-    Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     Route::get('/profile', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/profile', [UserController::class, 'update'])->name('users.update');
+    Route::get('/change-password', [UserController::class, 'editPassword'])->name('users.edit_password');
+    Route::patch('/change-password', [UserController::class, 'updatePassword'])->name('users.update_password');
 
     Route::resource('collections', CollectionEntityController::class);
 });
