@@ -22,16 +22,33 @@
                 <img class="w-24" src="{{ asset('images/logo.png') }}" alt="" class="logo"/>
             </a>
             <ul class="flex space-x-6 mr-6 text-lg">
-                <li>
-                    <a href="register.html" class="hover:text-red-500">
-                        <i class="fa-solid fa-user-plus"></i> Register
-                    </a>
-                </li>
-                <li>
-                    <a href="login.html" class="hover:text-red-500">
-                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
-                    </a>
-                </li>
+                @auth
+                    <li>
+                        <a href="{{ route('users.edit') }}" class="hover:text-red-500">
+                            <i class="fa-solid fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li>
+                        <form class="inline" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i> Logout
+                            </button>
+                        </form>
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('users.create') }}" class="hover:text-red-500">
+                            <i class="fa-solid fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('login') }}" class="hover:text-red-500">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                        </a>
+                    </li>
+                @endauth
             </ul>
         </nav>
         <main>

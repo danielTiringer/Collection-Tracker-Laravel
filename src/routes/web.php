@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectionEntityController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/register', [UserController::class, 'create'])->name('users.create');
+Route::post('/register', [UserController::class, 'store'])->name('users.store');
+Route::get('/login', [UserController::class, 'login'])->name('login');
+route::post('/login', [UserController::class, 'auth'])->name('users.auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/', [CollectionEntityController::class, 'index']);
+    Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::get('/profile', [UserController::class, 'edit'])->name('users.edit');
+
+    Route::resource('collections', CollectionEntityController::class);
 });
 
-Route::resource('/collections', CollectionEntityController::class);
