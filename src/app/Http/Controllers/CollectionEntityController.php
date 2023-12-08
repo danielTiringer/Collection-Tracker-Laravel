@@ -112,11 +112,13 @@ class CollectionEntityController extends Controller
         $validatedFormFields = $request->validated();
 
         if ($request->hasFile('image_file')) {
-            $oldImageRemoved = Storage::disk('public')->delete($collection->image);
-            if (!$oldImageRemoved) {
-                return redirect()
-                    ->route('collections.show', $collection)
-                    ->with('error', 'Collection update failed');
+            if ($collection->image) {
+                $oldImageRemoved = Storage::disk('public')->delete($collection->image);
+                if (!$oldImageRemoved) {
+                    return redirect()
+                        ->route('collections.show', $collection)
+                        ->with('error', 'Collection update failed');
+                }
             }
 
             $newImage = $request->file('image_file')->store('images', 'public');
