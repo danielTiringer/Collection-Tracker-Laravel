@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\CollectionEntity;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CollectionEntityPolicy
 {
@@ -44,6 +43,14 @@ class CollectionEntityPolicy
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, CollectionEntity $collectionEntity): bool
+    {
+        return $user->id === $collectionEntity->user_id;
+    }
+
+    /**
+     * Determine whether the user can add related elements to the model.
+     */
+    public function createElement(User $user, CollectionEntity $collectionEntity): bool
     {
         return $user->id === $collectionEntity->user_id;
     }

@@ -140,7 +140,7 @@ class CollectionEntityController extends Controller
 
         return redirect()
             ->route('collections.show', $collection)
-            ->with('success', 'Collection created successfully');
+            ->with('success', 'Collection updated successfully');
     }
 
     /**

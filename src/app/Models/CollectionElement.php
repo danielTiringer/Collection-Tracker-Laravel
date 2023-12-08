@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Models;
 
@@ -6,35 +6,27 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @mixin Builder
  * @property int $id
- * @property int $user_id
+ * @property int $collection_entity_id
  * @property string $name
  * @property string $description
- * @porperty int $goal
  * @property string $image
  */
-class CollectionEntity extends Model
+class CollectionElement extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
         'description',
-        'goal',
         'image',
     ];
 
-    public function user(): BelongsTo
+    public function entity(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function elements(): HasMany
-    {
-        return $this->hasMany(CollectionElement::class, 'collection_entity_id');
+        return $this->belongsTo(CollectionEntity::class, 'collection_entity_id');
     }
 }

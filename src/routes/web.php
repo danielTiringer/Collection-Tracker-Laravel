@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollectionElementController;
 use App\Http\Controllers\CollectionEntityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/change-password', [UserController::class, 'updatePassword'])->name('users.update_password');
 
     Route::resource('collections', CollectionEntityController::class);
+
+    Route::prefix('/collections/{collection}')->group(function () {
+        Route::resource('elements', CollectionElementController::class)->except(['index']);
+    });
 });
 
