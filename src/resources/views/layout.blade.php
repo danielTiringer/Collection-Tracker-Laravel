@@ -59,12 +59,14 @@
         >
             <p class="ml-2">Copyright &copy; {{ now()->format('Y') }}, All Rights reserved</p>
 
+            @auth
             <a
                 href="{{ route('collections.create') }}"
                 class="absolute top-1/3 right-10 bg-black text-white py-2 px-5"
             >
                 Create Collection
             </a>
+            @endauth
         </footer>
 
         <x-flash-message />
