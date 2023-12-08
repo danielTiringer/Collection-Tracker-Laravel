@@ -13,7 +13,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         User::factory(10)->create();
-         CollectionEntity::factory(10)->create();
+        // password = "password"
+        $testUserOne = User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        CollectionEntity::factory(10)->create([
+            'user_id' => $testUserOne->id
+        ]);
+
+        $testUserTwo = User::factory()->create([
+            'name' => 'Another User',
+            'email' => 'another@example.com',
+        ]);
+
+        CollectionEntity::factory(10)->create([
+            'user_id' => $testUserTwo->id
+        ]);
     }
 }

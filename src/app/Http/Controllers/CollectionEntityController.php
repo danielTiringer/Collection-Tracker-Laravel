@@ -19,7 +19,7 @@ class CollectionEntityController extends Controller
      */
     public function index(): View|Application|Factory|ContractsApplication
     {
-        $collections = (new CollectionEntity)->paginate(10);
+        $collections = auth()->user()->collectionEntities()->paginate(10);
 
         return view('collection_entity.index', [
             'collections' => $collections,
