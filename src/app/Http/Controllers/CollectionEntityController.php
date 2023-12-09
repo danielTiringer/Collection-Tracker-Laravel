@@ -149,7 +149,7 @@ class CollectionEntityController extends Controller
     public function destroy(CollectionEntity $collection): RedirectResponse
     {
         try {
-            $this->authorize('update', $collection);
+            $this->authorize('delete', $collection);
         } catch (AuthorizationException) {
             return redirect()
                 ->route('collections.index')
@@ -165,6 +165,6 @@ class CollectionEntityController extends Controller
 
         return redirect()
             ->route('collections.index')
-            ->with('success', 'Collection created successfully');
+            ->with('success', 'Collection deleted successfully');
     }
 }

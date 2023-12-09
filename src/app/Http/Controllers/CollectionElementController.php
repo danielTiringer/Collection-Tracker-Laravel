@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class CollectionElementController extends Controller
 {
@@ -80,32 +81,112 @@ class CollectionElementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CollectionElement $collectionElement)
+    public function show(CollectionEntity $collection, CollectionElement $element): Factory|View|Application|RedirectResponse|ContractsApplication
     {
-        //
+        try {
+            $this->authorize('view', $element);
+        } catch (AuthorizationException) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'Not authorized to see element');
+        }
+
+        return view('collection_element.show', [
+            'element' => $element,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CollectionElement $collectionElement)
+    public function edit(CollectionEntity $collection, CollectionElement $element): Factory|View|Application|RedirectResponse|ContractsApplication
     {
-        //
+        try {
+            $this->authorize('update', $element);
+        } catch (AuthorizationException) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'Not authorized to edit element');
+        }
+
+        return view('collection_element.edit', [
+            'element' => $element,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCollectionElementRequest $request, CollectionElement $collectionElement)
+    public function update(
+        UpdateCollectionElementRequest $request,
+        CollectionEntity $collection,
+        CollectionElement $element,
+    ): RedirectResponse
     {
-        //
+        try {
+            $this->authorize('update', $element);
+        } catch (AuthorizationException) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'Not authorized to edit element');
+        }
+
+        $validatedFormFields = $request->validated();
+
+        if ($request->hasFile('image_file')) {
+            if ($element->image) {
+                $oldImageRemoved = Storage::disk('public')->delete($element->image);
+                if (!$oldImageRemoved) {
+                    return redirect()
+                        ->route('elements.show', $element)
+                        ->with('error', 'Element update failed');
+                }
+            }
+
+            $newImage = $request->file('image_file')->store('images', 'public');
+            if (!$newImage) {
+                return redirect()
+                    ->route('elements.show', $element)
+                    ->with('error', 'Element update failed');
+            }
+
+            $validatedFormFields['image'] = $newImage;
+        }
+
+        $elementUpdated = $element->update($validatedFormFields);
+        if (!$elementUpdated) {
+            return redirect()
+                ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
+                ->with('error', 'Element update failed');
+        }
+
+        return redirect()
+            ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
+            ->with('success', 'Element updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CollectionElement $collectionElement)
+    public function destroy(CollectionEntity $collection, CollectionElement $element): RedirectResponse
     {
-        //
+        try {
+            $this->authorize('delete', $element);
+        } catch (AuthorizationException) {
+            return redirect()
+                ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
+                ->with('error', 'Not authorized to delete element');
+        }
+
+        $elementDeleted = $element->delete();
+        if (!$elementDeleted) {
+            return redirect()
+                ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
+                ->with('error', 'Element deletion failed');
+        }
+
+        return redirect()
+            ->route('collections.show', ['collection' => $element->entity])
+            ->with('success', 'Element deleted successfully');
     }
 }

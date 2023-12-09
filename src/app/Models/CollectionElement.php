@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $description
  * @property string $image
+ * @property CollectionEntity $entity
  */
 class CollectionElement extends Model
 {

@@ -9,7 +9,7 @@
         />
         <div>
             <h3 class="text-2xl">
-                <a href="{{ route('elements.show', ['collection' => $element->collection_entity_id, 'element' => $element->id]) }}">{{ $element->name }}</a>
+                <a href="{{ route('elements.show', ['collection' => $element->collection_entity_id, 'element' => $element]) }}">{{ $element->name }}</a>
             </h3>
             <div class="text-xl font-bold mb-4">{{ $element->description }}</div>
         </div>

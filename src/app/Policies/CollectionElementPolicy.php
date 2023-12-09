@@ -17,11 +17,19 @@ class CollectionElementPolicy
     }
 
     /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, CollectionElement $collectionElement): bool
+    {
+        return $user->id === $collectionElement->entity->user_id;
+    }
+
+    /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, CollectionElement $collectionElement): bool
     {
-        return $user->id === $collectionElement->collection->user_id;
+        return $user->id === $collectionElement->entity->user_id;
     }
 
     /**
@@ -29,6 +37,6 @@ class CollectionElementPolicy
      */
     public function delete(User $user, CollectionElement $collectionElement): bool
     {
-        return $user->id === $collectionElement->collection->user_id;
+        return $user->id === $collectionElement->entity->user_id;
     }
 }
