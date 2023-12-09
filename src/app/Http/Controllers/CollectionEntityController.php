@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCollectionEntityRequest;
 use App\Http\Requests\UpdateCollectionEntityRequest;
+use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
@@ -11,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CollectionEntityController extends Controller
@@ -63,8 +65,9 @@ class CollectionEntityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CollectionEntity $collection): ContractsApplication|Factory|View|Application|RedirectResponse
+    public function show(Request $request, CollectionEntity $collection): ContractsApplication|Factory|View|Application|RedirectResponse
     {
+//        dd($request->search);
         try {
             $this->authorize('view', $collection);
         } catch (AuthorizationException) {
@@ -73,8 +76,16 @@ class CollectionEntityController extends Controller
                 ->with('error', 'Not authorized to view collection');
         }
 
+        $elements = $collection->elements;
+        if ($request->exists('search') && !is_null($request->get('search'))) {
+            $elements = (new CollectionElement)->where(['collection_entity_id' => $collection->id])
+                ->filter(['search' => $request->get('search')])
+                ->get();
+        }
+
         return view('collection_entity.show', [
             'collection' => $collection,
+            'elements' => $elements,
         ]);
     }
 

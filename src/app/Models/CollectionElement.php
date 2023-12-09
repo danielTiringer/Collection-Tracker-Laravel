@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 /**
  * @mixin Builder
@@ -29,5 +30,13 @@ class CollectionElement extends Model
     public function entity(): BelongsTo
     {
         return $this->belongsTo(CollectionEntity::class, 'collection_entity_id');
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        if (isset($filters['search'])) {
+            $query->whereRaw("UPPER(name) LIKE '%" . Str::upper($filters['search']) . "%'")
+                ->orWhereRaw("UPPER(description) LIKE '%" . Str::upper($filters['search']) . "%'");
+        }
     }
 }

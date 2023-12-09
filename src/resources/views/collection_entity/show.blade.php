@@ -45,16 +45,19 @@
             </div>
         </x-card>
 
+        <x-search :route="route('collections.show', $collection->id)" placeholder="Search elements" />
+        @unless(count($elements) == 0)
 
-        <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 mt-4">
-            @unless(count($collection->elements) == 0)
-                @foreach($collection->elements as $element)
+            <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4 mt-4">
+                @foreach($elements as $element)
                     <x-element-card :element="$element" />
                 @endforeach
-            @else
-                <p>No elements found</p>
-            @endunless
-        </div>
+            </div>
+        @else
+            <div class="mx-4 mt-4">
+                <p>No elements to display</p>
+            </div>
+        @endunless
 
         <x-card class="mt-4 p-2 flex space-x-6 justify-between">
             <div class="flex space-x-6">
@@ -74,7 +77,6 @@
                         <i class="fa-solid fa-trash"></i> Delete
                     </button>
                 </form>
-
             </div>
         </x-card>
     </div>
