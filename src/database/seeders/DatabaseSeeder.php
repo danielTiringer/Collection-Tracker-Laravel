@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CollectionElement;
 use App\Models\User;
 use App\Models\CollectionEntity;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,25 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        CollectionEntity::factory(10)->create([
+        $testEntityOne = CollectionEntity::factory()->create([
+            'user_id' => $testUserOne->id,
+            'goal' => 15,
+        ]);
+
+        CollectionElement::factory(10)->create([
+            'collection_entity_id' => $testEntityOne->id,
+        ]);
+
+        $testEntityTwo = CollectionEntity::factory()->create([
+            'user_id' => $testUserOne->id,
+            'goal' => 20,
+        ]);
+
+        CollectionElement::factory(10)->create([
+            'collection_entity_id' => $testEntityTwo->id,
+        ]);
+
+        CollectionEntity::factory(2)->create([
             'user_id' => $testUserOne->id
         ]);
 
