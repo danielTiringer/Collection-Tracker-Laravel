@@ -37,6 +37,13 @@ Containers created and their ports (if used) are as follows:
 - **php** - `:4200`
 - **postgres** - `:5432`
 
+### Migrations, database seed
+
+Run the following command:
+```shell
+docker-compose run --rm php php artisan migrate:refresh --seed
+```
+
 ### Troubleshooting
 
 <!-- The following issues have occurred: -->
