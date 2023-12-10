@@ -59,7 +59,7 @@
                     name="image_file"
                 />
                 <img
-                    class="w-48 mr-6 mb-6"
+                    class="w-48 mx-auto my-6"
                     src="{{ $element->image ? asset('storage/' . $element->image) : asset('images/no-image.png') }}"
                     alt=""
                 />
@@ -69,7 +69,12 @@
             </div>
 
             <div class="mb-6 flex justify-between">
-                <a href="{{ route('collections.index') }}" class="text-black ml-4"> Back </a>
+                <a
+                    href="{{ route('elements.show', ['collection' => $element->collection_entity_id, 'element' => $element]) }}"
+                    class="text-black ml-4"
+                >
+                    Back
+                </a>
                 <button
                     class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
                 >
