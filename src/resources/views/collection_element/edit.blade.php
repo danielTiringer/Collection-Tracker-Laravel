@@ -42,9 +42,7 @@
                     name="description"
                     rows="10"
                     placeholder="Include tasks, requirements, salary, etc"
-                >
-                    {{ $element->description }}
-                </textarea>
+                >{{ $element->description }}</textarea>
                 @error('description')
                 <p class="text-red-500 text-xs mb-1">{{ $message }}</p>
                 @enderror
@@ -98,17 +96,8 @@
             </div>
 
             <div class="mb-6 flex justify-between">
-                <a
-                    href="{{ route('elements.show', ['collection' => $element->collection_entity_id, 'element' => $element]) }}"
-                    class="text-black ml-4"
-                >
-                    Back
-                </a>
-                <button
-                    class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
-                >
-                    Edit Element
-                </button>
+                <x-back-button :route="route('elements.show', ['collection' => $element->collection_entity_id, 'element' => $element])" />
+                <x-save-button text="Changes" />
             </div>
         </form>
     </x-card>

@@ -81,12 +81,8 @@
             </div>
 
             <div class="mb-6 flex justify-between">
-                <a href="{{ route('collections.index') }}" class="text-black ml-4"> Back </a>
-                <button
-                    class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
-                >
-                    Create Collection
-                </button>
+                <x-back-button :route="route('collections.index')" />
+                <x-save-button text="" />
             </div>
         </form>
     </x-card>

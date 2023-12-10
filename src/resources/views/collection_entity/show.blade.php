@@ -1,12 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <a
-        class="inline-block text-black ml-4 mb-4"
-        href="{{ route('collections.index') }}"
-    >
-        <i class="fa-solid fa-arrow-left"></i> Back
-    </a>
+    <x-back-button :route="route('collections.index')"></x-back-button>
     <div class="mx-4">
         <x-card class="">
             <div class="flex flex-row items-center justify-center text-center">
@@ -38,29 +33,20 @@
 
         <x-card class="mt-4 p-2 flex space-x-6 justify-between">
             <div class="flex space-x-6">
-                <a href="{{ route('elements.create', $collection) }}">
+                <a href="{{ route('elements.create', $collection) }}" class="hover:text-red-500">
                     <i class="fa-solid fa-add"></i> Add To The Collection
                 </a>
             </div>
             <div class="flex space-x-6">
-                <a href="{{ route('collections.edit', $collection->id) }}">
-                    <i class="fa-solid fa-pencil"></i> Edit
-                </a>
+                <x-edit-button :route="route('collections.edit', $collection->id)" />
 
-                <form action="{{ route('collections.destroy', $collection) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="text-red-500">
-                        <i class="fa-solid fa-trash"></i> Delete
-                    </button>
-                </form>
+                <x-delete-button :route="route('collections.destroy', $collection)" />
             </div>
         </x-card>
 
         <x-search :route="route('collections.show', $collection->id)" placeholder="Search elements" />
 
         @unless(count($elements) == 0)
-
             <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mt-4">
                 @foreach($elements as $element)
                     <x-element-card :element="$element" />

@@ -86,7 +86,7 @@
             </div>
 
             <div class="mb-6 flex justify-between">
-                <a href="{{ route('collections.show', $collection->id) }}" class="text-black ml-4"> Back</a>
+                <x-back-button :route="route('collections.show', $collection->id)" />
                 <button
                     class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
                 >

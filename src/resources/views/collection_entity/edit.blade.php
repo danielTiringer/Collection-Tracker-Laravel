@@ -41,9 +41,7 @@
                     name="description"
                     rows="10"
                     placeholder="Include tasks, requirements, salary, etc"
-                >
-                    {{ $collection->description }}
-                </textarea>
+                >{{ $collection->description }}</textarea>
                 @error('description')
                     <p class="text-red-500 text-xs mb-1">{{ $message }}</p>
                 @enderror
@@ -77,7 +75,7 @@
                     name="image_file"
                 />
                 <img
-                    class="w-48 mr-6 mb-6"
+                    class="w-48 mx-auto my-6"
                     src="{{ $collection->image ? asset('storage/' . $collection->image) : asset('images/no-image.png') }}"
                     alt=""
                 />
@@ -87,12 +85,8 @@
             </div>
 
             <div class="mb-6 flex justify-between">
-                <a href="{{ route('collections.index') }}" class="text-black ml-4"> Back </a>
-                <button
-                    class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
-                >
-                    Edit Collection
-                </button>
+                <x-back-button :route="route('collections.show', $collection->id)" />
+                <x-save-button text="Changes" />
             </div>
         </form>
     </x-card>

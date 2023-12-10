@@ -26,7 +26,7 @@
                     <li>
                         <a
                             href="{{ route('collections.create') }}"
-                            class="bg-red-500 hover:text-white py-1 px-2 rounded"
+                            class="bg-red-500 hover:bg-black text-white py-1 px-2 rounded"
                         >
                             <i class="fa-solid fa-add"></i> Create Collection
                         </a>
