@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $user_id
  * @property string $name
  * @property string $description
- * @porperty int $goal
+ * @property int $goal
  * @property string $image
  */
 class CollectionEntity extends Model

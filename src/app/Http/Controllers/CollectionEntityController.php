@@ -55,7 +55,19 @@ class CollectionEntityController extends Controller
             $validatedFormFields['image'] = $newImage;
         }
 
-        (new CollectionEntity)->create($validatedFormFields);
+        $collection = new CollectionEntity;
+        $collection->name = $validatedFormFields['name'];
+        $collection->description = $validatedFormFields['description'];
+        $collection->goal = $validatedFormFields['goal'];
+        $collection->image = $validatedFormFields['image'];
+        $collection->user_id = auth()->user()->getAuthIdentifier();
+
+        $collectionSaved = $collection->save();
+        if (!$collectionSaved) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'Collection creation failed');
+        }
 
         return redirect()
             ->route('collections.index')
@@ -67,7 +79,6 @@ class CollectionEntityController extends Controller
      */
     public function show(Request $request, CollectionEntity $collection): ContractsApplication|Factory|View|Application|RedirectResponse
     {
-//        dd($request->search);
         try {
             $this->authorize('view', $collection);
         } catch (AuthorizationException) {
