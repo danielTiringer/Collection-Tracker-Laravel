@@ -24,14 +24,24 @@
             <ul class="flex space-x-6 mr-6 text-lg">
                 @auth
                     <li>
+                        <a
+                            href="{{ route('collections.create') }}"
+                            class="bg-red-500 hover:text-white py-1 px-2 rounded"
+                        >
+                            <i class="fa-solid fa-add"></i> Create Collection
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="{{ route('users.edit') }}" class="hover:text-red-500">
                             <i class="fa-solid fa-user"></i> Profile
                         </a>
                     </li>
+
                     <li>
                         <form class="inline" method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit">
+                            <button type="submit" class="hover:text-red-500">
                                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Logout
                             </button>
                         </form>
@@ -43,6 +53,7 @@
                             <i class="fa-solid fa-user-plus"></i> Register
                         </a>
                     </li>
+
                     <li>
                         <a href="{{ route('login') }}" class="hover:text-red-500">
                             <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
@@ -51,22 +62,12 @@
                 @endauth
             </ul>
         </nav>
+
         <main class="max-w-screen-2xl mx-auto">
             @yield('content')
         </main>
-        <footer
-            class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-red-500 text-white h-24 mt-24 opacity-90 md:justify-center"
-        >
-            <p class="ml-2">Copyright &copy; {{ now()->format('Y') }}, All Rights reserved</p>
 
-            @auth
-            <a
-                href="{{ route('collections.create') }}"
-                class="absolute top-1/3 right-10 bg-black text-white py-2 px-5"
-            >
-                Create Collection
-            </a>
-            @endauth
+        <footer>
         </footer>
 
         <x-flash-message />
