@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CollectionElementStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
  * @property int $collection_entity_id
  * @property string $name
  * @property string $description
+ * @property CollectionElementStatus $status
  * @property string $image
  * @property CollectionEntity $entity
  */
@@ -24,7 +26,12 @@ class CollectionElement extends Model
     protected $fillable = [
         'name',
         'description',
+        'status',
         'image',
+    ];
+
+    protected $casts = [
+        'status' => CollectionElementStatus::class,
     ];
 
     public function entity(): BelongsTo

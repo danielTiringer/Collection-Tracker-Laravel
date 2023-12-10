@@ -1,3 +1,4 @@
+@php use App\Enums\CollectionElementStatus; @endphp
 @extends('layout')
 
 @section('content')
@@ -45,6 +46,27 @@
                     {{ old('description') }}
                 </textarea>
                 @error('description')
+                <p class="text-red-500 text-xs mb-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-6">
+                <label
+                    for="status"
+                    class="inline-block text-lg mb-2"
+                >
+                    Status
+                </label>
+                <select
+                    class="border border-gray-200 rounded p-2 w-full bg-white"
+                    name="status"
+                    id="status"
+                >
+                    @foreach(CollectionElementStatus::cases() as $status)
+                        <option value="{{ $status->value }}">{{ $status->getLabelText() }}</option>
+                    @endforeach
+                </select>
+                @error('status')
                 <p class="text-red-500 text-xs mb-1">{{ $message }}</p>
                 @enderror
             </div>

@@ -63,6 +63,7 @@ class CollectionElementController extends Controller
         $element = new CollectionElement;
         $element->name = $validatedFormFields['name'];
         $element->description = $validatedFormFields['description'];
+        $element->status = $validatedFormFields['status'];
         $element->image = $validatedFormFields['image'] ?? null;
         $element->collection_entity_id = $collection->id;
 

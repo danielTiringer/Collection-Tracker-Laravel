@@ -14,13 +14,14 @@
             >
                 <div class="flex flex-row">
                     <img
-                        class="w-48 mr-6 mb-6"
+                        class="w-48 mr-6 mb-6 {{ $element->status->isPlanned() ? 'grayscale' : '' }}"
                         src="{{ $element->image ? asset('storage/' . $element->image) : asset('images/no-image.png') }}"
                         alt=""
                     />
                     <div class="flex items-center">
                         <div>
                             <h3 class="text-2xl mb-2">{{ $element->name }}</h3>
+                            <p>{{ $element->status->getLabelText() }}</p>
                         </div>
                     </div>
                 </div>

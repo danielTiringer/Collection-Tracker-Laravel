@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CollectionElementStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\File;
 
 class UpdateCollectionElementRequest extends FormRequest
@@ -30,6 +32,10 @@ class UpdateCollectionElementRequest extends FormRequest
                 'max:255',
             ],
             'description' => 'required',
+            'status' => [
+                'required',
+                new Enum(CollectionElementStatus::class)
+            ],
             'image_file' => [
                 'nullable',
                 File::image()
