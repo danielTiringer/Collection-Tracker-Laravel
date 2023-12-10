@@ -24,7 +24,7 @@
                             <div class="text-xl font-bold mb-4">
                                 Progress:
                                 @if($collection->goal)
-                                    0 / {{ $collection->goal }}
+                                    {{ count($elements) }} / {{ $collection->goal }}
                                 @else
                                     No goal set
                                 @endif
