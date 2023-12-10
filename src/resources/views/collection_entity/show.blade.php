@@ -12,7 +12,7 @@
             <div class="flex flex-row items-center justify-center text-center">
                 <div class="flex-none w-1/4 flex justify-center">
                     <img
-                        class="w-48"
+                        class="w-48 object-scale-down"
                         src="{{ $collection->image ? asset('storage/' . $collection->image) : asset('images/no-image.png') }}"
                         alt=""
                     />
