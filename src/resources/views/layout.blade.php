@@ -51,7 +51,7 @@
                 @endauth
             </ul>
         </nav>
-        <main>
+        <main class="max-w-screen-2xl mx-auto">
             @yield('content')
         </main>
         <footer

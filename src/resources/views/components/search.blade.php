@@ -2,7 +2,7 @@
 
 <form action="{{ $route }}">
     <div
-        class="relative border-2 border-gray-100 m-4 rounded-lg"
+        class="relative border-2 border-gray-100 my-4 rounded-lg"
         x-data="{ search: '{{ request()->get('search') }}' }"
     >
         <div class="absolute top-4 left-3">
