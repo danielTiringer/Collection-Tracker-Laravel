@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property int $goal
  * @property string $image
+ * @property CollectionElement[] $elements
  */
 class CollectionEntity extends Model
 {

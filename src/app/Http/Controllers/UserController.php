@@ -31,6 +31,11 @@ class UserController extends Controller
         $validatedFormFields['password'] = Hash::make($validatedFormFields['password']);
 
         $user = (new User)->create($validatedFormFields);
+        if (!$user instanceof User) {
+            return redirect()
+                ->route('users.create')
+                ->with('error', 'User cannot be found');
+        }
 
         auth()->login($user);
 
@@ -84,6 +89,11 @@ class UserController extends Controller
         $validatedFormFields = $request->validated();
 
         $currentUser = (new User)->findOrFail(Auth::id());
+        if (!$currentUser instanceof User) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'User cannot be found');
+        }
 
         try {
             $this->authorize('update', $currentUser);
@@ -117,6 +127,11 @@ class UserController extends Controller
         $validatedFormFields = $request->validated();
 
         $currentUser = (new User)->findOrFail(Auth::id());
+        if (!$currentUser instanceof User) {
+            return redirect()
+                ->route('collections.index')
+                ->with('error', 'User cannot be found');
+        }
 
         try {
             $this->authorize('updatePassword', $currentUser);

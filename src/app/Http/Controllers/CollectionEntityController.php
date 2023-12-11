@@ -89,8 +89,9 @@ class CollectionEntityController extends Controller
 
         $elements = $collection->elements;
         if ($request->exists('search') && !is_null($request->get('search'))) {
-            $elements = (new CollectionElement)->where(['collection_entity_id' => $collection->id])
+            $elements = (new CollectionElement)
                 ->filter(['search' => $request->get('search')])
+                ->where(['collection_entity_id' => $collection->id])
                 ->get();
         }
 

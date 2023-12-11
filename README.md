@@ -29,8 +29,7 @@ From the respository's root run `docker-compose up -d --build`. Open up your bro
 
 - `docker-compose run --rm php composer update`
 - `docker-compose run --rm php artisan migrate`
-- `docker-compose run --rm php phpunit` or `docker-compose run --rm php phpunit --filter insert_test_name_here`
-- `docker-compose run --rm npm run dev`
+- `docker-compose run --rm php composer stan`
 
 Containers created and their ports (if used) are as follows:
 

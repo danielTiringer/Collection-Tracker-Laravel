@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @property CollectionElementStatus $status
  * @property string $image
  * @property CollectionEntity $entity
+ * @method Builder filter(array $filters)
  */
 class CollectionElement extends Model
 {
