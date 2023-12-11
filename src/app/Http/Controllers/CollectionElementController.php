@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCollectionElementRequest;
 use App\Http\Requests\UpdateCollectionElementRequest;
 use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
+use App\Models\Source;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -31,6 +32,7 @@ class CollectionElementController extends Controller
 
         return view('collection_element.create', [
             'collection' => $collection,
+            'sources' => Source::all(),
         ]);
     }
 
@@ -48,6 +50,7 @@ class CollectionElementController extends Controller
         }
 
         $validatedFormFields = $request->validated();
+//        dd($validatedFormFields);
 
         if ($request->hasFile('image_file')) {
             $newImage = $request->file('image_file')->store('images', 'public');
@@ -73,6 +76,8 @@ class CollectionElementController extends Controller
                 ->route('collections.show', $collection->id)
                 ->with('error', 'Element creation failed');
         }
+
+        $element->source()->attach([$validatedFormFields['source']]);
 
         return redirect()
             ->route('collections.show', $collection->id)

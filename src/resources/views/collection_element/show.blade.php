@@ -17,6 +17,9 @@
                         <div>
                             <h3 class="text-2xl mb-2">{{ $element->name }}</h3>
                             <p>{{ $element->status->getLabelText() }}</p>
+                            @if($element->source()->first())
+                                <p>Sourced from {{ $element->source()->first()->name }}</p>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CollectionElement;
+use App\Models\Source;
 use App\Models\User;
 use App\Models\CollectionEntity;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $sourceOne = Source::factory()->create([
+            'name' => 'Ebay',
+        ]);
+
+        $sourceTwo = Source::factory()->create([
+            'name' => 'Facebook Marketplace',
+        ]);
+
         // password = "password"
         $testUserOne = User::factory()->create([
             'name' => 'Test User',

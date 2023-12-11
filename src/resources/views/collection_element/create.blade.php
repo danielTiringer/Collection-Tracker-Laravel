@@ -72,6 +72,27 @@
             </div>
 
             <div class="mb-6">
+                <label
+                    for="source"
+                    class="inline-block text-lg mb-2"
+                >
+                    Source
+                </label>
+                <select
+                    class="border border-gray-200 rounded p-2 w-full bg-white"
+                    name="source"
+                    id="source"
+                >
+                    @foreach($sources as $source)
+                        <option value="{{ $source->id }}">{{ $source->name }}</option>
+                    @endforeach
+                </select>
+                @error('source')
+                <p class="text-red-500 text-xs mb-1">{{ $source }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-6">
                 <label for="image_file" class="inline-block text-lg mb-2">
                     Collection Image
                 </label>

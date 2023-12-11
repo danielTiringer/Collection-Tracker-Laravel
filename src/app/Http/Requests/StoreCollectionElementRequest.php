@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\CollectionElementStatus;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\File;
 
@@ -34,6 +35,10 @@ class StoreCollectionElementRequest extends FormRequest
             'status' => [
                 'required',
                 new Enum(CollectionElementStatus::class)
+            ],
+            'source' => [
+                'required',
+                Rule::exists('sources', 'id'),
             ],
             'image_file' => [
                 'nullable',
