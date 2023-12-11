@@ -70,26 +70,13 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <div class="mb-6">
-                        <button
-                            type="submit"
-                            class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
-                        >
-                            Submit
-                        </button>
-                    </div>
-
                     <div class="mt-3">
-                        <p>
-                            <a
-                                href="{{ route('users.edit') }}"
-                                class="text-red-500"
-                            >
-                                Back
-                            </a>
-                        </p>
+                        <x-back-button :route="route('users.edit')" />
                     </div>
 
+                    <div class="mb-6">
+                        <x-save-button text="" />
+                    </div>
                 </div>
             </form>
         </div>

@@ -1,7 +1,10 @@
 @extends('layout')
 
 @section('content')
-    <x-card class="p-10 max-w-lg mx-auto mt-24">
+    <div class="max-w-lg mx-auto mt-24">
+        <x-back-button :route="route('collections.index')" />
+    </div>
+    <x-card class="p-10 max-w-lg mx-auto">
         <div
             class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24"
         >
@@ -43,19 +46,12 @@
                     @enderror
                 </div>
 
-                <div class="mb-6">
-                    <button
-                        type="submit"
-                        class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black"
-                    >
-                        Save
-                    </button>
-                </div>
+                <div class="flex flex-row justify-between">
+                        <p class="mt-2">
+                            <a href="{{ route('users.edit_password') }}" class="text-black hover:text-red-500">Change Password</a>
+                        </p>
 
-                <div class="mt-8">
-                    <p>
-                        <a href="{{ route('users.edit_password') }}" class="text-red-500">Change Password</a>
-                    </p>
+                    <x-save-button text="" />
                 </div>
             </form>
         </div>
