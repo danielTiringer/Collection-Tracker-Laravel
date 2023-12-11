@@ -7,7 +7,7 @@
             id="voice-search"
             type="text"
             name="search"
-            class="h-14 w-full px-6 rounded bg-gray-50 border border-gray-200 focus:shadow focus:outline-none"
+            class="h-14 w-full px-6 rounded-lg bg-gray-50 border border-gray-200 focus:shadow focus:outline-none"
             placeholder="{{ $placeholder }}"
             x-model="search"
         />

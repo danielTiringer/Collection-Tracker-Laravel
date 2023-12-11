@@ -67,7 +67,7 @@
 
             <div class="mb-6">
                 <label for="image_file" class="inline-block text-lg mb-2">
-                    Collection Image
+                    Image
                 </label>
                 <input
                     type="file"
