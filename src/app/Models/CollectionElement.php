@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
  * @property CollectionElementStatus $status
  * @property string $image
  * @property CollectionEntity $entity
+ * @property Source[] $sources
  * @method Builder filter(array $filters)
  */
 class CollectionElement extends Model
@@ -42,9 +43,9 @@ class CollectionElement extends Model
         return $this->belongsTo(CollectionEntity::class, 'collection_entity_id');
     }
 
-    public function source(): BelongsToMany
+    public function sources(): BelongsToMany
     {
-        return $this->belongsToMany(Source::class);
+        return $this->belongsToMany(Source::class)->withTimestamps();
     }
 
     public function scopeFilter($query, array $filters)

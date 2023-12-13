@@ -20,6 +20,6 @@ class Source extends Model
 
     public function elements(): BelongsToMany
     {
-        return $this->belongsToMany(CollectionElement::class);
+        return $this->belongsToMany(CollectionElement::class)->withTimestamps();
     }
 }

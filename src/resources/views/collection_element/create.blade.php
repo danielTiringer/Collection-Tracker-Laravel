@@ -83,6 +83,7 @@
                     name="source"
                     id="source"
                 >
+                    <option value="0">None</option>
                     @foreach($sources as $source)
                         <option value="{{ $source->id }}">{{ $source->name }}</option>
                     @endforeach

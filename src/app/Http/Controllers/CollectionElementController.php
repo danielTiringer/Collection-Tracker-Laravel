@@ -77,7 +77,9 @@ class CollectionElementController extends Controller
                 ->with('error', 'Element creation failed');
         }
 
-        $element->source()->attach([$validatedFormFields['source']]);
+        if ($validatedFormFields['source'] != 0) {
+            $element->sources()->attach([$validatedFormFields['source']]);
+        }
 
         return redirect()
             ->route('collections.show', $collection->id)
@@ -117,6 +119,7 @@ class CollectionElementController extends Controller
 
         return view('collection_element.edit', [
             'element' => $element,
+            'sources' => Source::all(),
         ]);
     }
 
@@ -164,6 +167,20 @@ class CollectionElementController extends Controller
             return redirect()
                 ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
                 ->with('error', 'Element update failed');
+        }
+
+        $elementHasSource = $element->sources()->exists();
+
+        if ($validatedFormFields['source'] != 0) {
+            if (!$elementHasSource) {
+                $element->sources()->attach([$validatedFormFields['source']]);
+            } else {
+                $element->sources()->sync([$validatedFormFields['source']]);
+            }
+        }
+
+        if ($validatedFormFields['source'] == 0 && $elementHasSource) {
+            $element->sources()->sync([]);
         }
 
         return redirect()
