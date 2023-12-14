@@ -6,7 +6,7 @@
     </div>
     <x-card class="p-10 max-w-lg mx-auto">
         <div
-            class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto mt-24"
+            class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto"
         >
             <header class="text-center">
                 <h2 class="text-2xl font-bold uppercase mb-1">
