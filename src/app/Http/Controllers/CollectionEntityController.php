@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCollectionEntityRequest;
 use App\Http\Requests\UpdateCollectionEntityRequest;
 use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
+use App\Services\ImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CollectionEntityController extends Controller
 {
+    protected ImageService $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -45,7 +53,7 @@ class CollectionEntityController extends Controller
         $validatedFormFields = $request->validated();
 
         if ($request->hasFile('image_file')) {
-            $newImage = $request->file('image_file')->store('images', 'public');
+            $newImage = $this->imageService->store($request->file('image_file'));
             if (!$newImage) {
                 return redirect()
                     ->route('collections.index')
@@ -136,7 +144,7 @@ class CollectionEntityController extends Controller
 
         if ($request->hasFile('image_file')) {
             if ($collection->image) {
-                $oldImageRemoved = Storage::disk('public')->delete($collection->image);
+                $oldImageRemoved = $this->imageService->destroy($collection->image);
                 if (!$oldImageRemoved) {
                     return redirect()
                         ->route('collections.show', $collection)
@@ -144,7 +152,7 @@ class CollectionEntityController extends Controller
                 }
             }
 
-            $newImage = $request->file('image_file')->store('images', 'public');
+            $newImage = $this->imageService->store($request->file('image_file'));
             if (!$newImage) {
                 return redirect()
                     ->route('collections.show', $collection)
@@ -179,10 +187,19 @@ class CollectionEntityController extends Controller
                 ->with('error', 'Not authorized to delete collection');
         }
 
+        if ($collection->image) {
+            $oldImageRemoved = $this->imageService->destroy($collection->image);
+            if (!$oldImageRemoved) {
+                return redirect()
+                    ->route('collections.show', $collection->id)
+                    ->with('error', 'Collection deletion failed');
+            }
+        }
+
         $collectionDeleted = $collection->delete();
         if (!$collectionDeleted) {
             return redirect()
-                ->route('collections.index')
+                ->route('collections.show', $collection->id)
                 ->with('error', 'Collection deletion failed');
         }
 

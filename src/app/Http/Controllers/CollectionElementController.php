@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCollectionElementRequest;
 use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
 use App\Models\Source;
+use App\Services\ImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CollectionElementController extends Controller
 {
+    protected ImageService $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -50,10 +58,9 @@ class CollectionElementController extends Controller
         }
 
         $validatedFormFields = $request->validated();
-//        dd($validatedFormFields);
 
         if ($request->hasFile('image_file')) {
-            $newImage = $request->file('image_file')->store('images', 'public');
+            $newImage = $this->imageService->store($request->file('image_file'));
             if (!$newImage) {
                 return redirect()
                     ->route('collections.show', $collection->id)
@@ -144,7 +151,7 @@ class CollectionElementController extends Controller
 
         if ($request->hasFile('image_file')) {
             if ($element->image) {
-                $oldImageRemoved = Storage::disk('public')->delete($element->image);
+                $oldImageRemoved = $this->imageService->destroy($element->image);
                 if (!$oldImageRemoved) {
                     return redirect()
                         ->route('elements.show', $element)
@@ -152,7 +159,7 @@ class CollectionElementController extends Controller
                 }
             }
 
-            $newImage = $request->file('image_file')->store('images', 'public');
+            $newImage = $this->imageService->store($request->file('image_file'));
             if (!$newImage) {
                 return redirect()
                     ->route('elements.show', $element)
@@ -199,6 +206,15 @@ class CollectionElementController extends Controller
             return redirect()
                 ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
                 ->with('error', 'Not authorized to delete element');
+        }
+
+        if ($element->image) {
+            $oldImageRemoved = $this->imageService->destroy($element->image);
+            if (!$oldImageRemoved) {
+                return redirect()
+                    ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
+                    ->with('error', 'Element deletion failed');
+            }
         }
 
         $elementDeleted = $element->delete();
