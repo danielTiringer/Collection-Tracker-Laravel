@@ -14,7 +14,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
 class CollectionElementController extends Controller
 {
