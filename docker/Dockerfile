@@ -62,8 +62,3 @@ COPY --from=builder /var/www/html/vendor /var/www/html/vendor
 FROM base as dev
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-USER root
-RUN apk add --no-cache bash
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash
-RUN apk add symfony-cli
-USER www
