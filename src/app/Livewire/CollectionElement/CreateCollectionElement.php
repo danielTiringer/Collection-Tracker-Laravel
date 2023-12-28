@@ -9,6 +9,7 @@ use App\Models\Source;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -45,11 +46,7 @@ class CreateCollectionElement extends Component
 
         return view('livewire.collection_element.create')
             ->extends('layout')
-            ->section('content')
-            ->with([
-                'sources' => $this->sources,
-                'statuses' => $this->statuses,
-            ]);
+            ->section('content');
     }
 
     /**
@@ -76,5 +73,11 @@ class CreateCollectionElement extends Component
         return redirect()
             ->route('collections.show', $this->collection->id)
             ->with('success', 'Element created successfully');
+    }
+
+    #[On('source-added')]
+    public function updateSources(): void
+    {
+        $this->sources = Source::all();
     }
 }
