@@ -13,8 +13,9 @@
             referrerpolicy="no-referrer"
         />
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="//unpkg.com/alpinejs" defer></script>
+{{--        <script src="//unpkg.com/alpinejs" defer></script>--}}
         <title>Collections | Keep track of your collections</title>
+        @livewireStyles
     </head>
     <body class="mb-48">
         <nav class="flex justify-between items-center mb-4">
@@ -71,5 +72,6 @@
         </footer>
 
         <x-flash-message />
+        @livewireScripts
     </body>
 </html>
