@@ -11,12 +11,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @mixin Builder
  * @property int $id
- * @property string $name
+ * @property string $source
  * @property CollectionElement[] $elements
  */
 class Source extends Model
 {
     use HasFactory, SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'source',
+    ];
 
     public function elements(): BelongsToMany
     {
