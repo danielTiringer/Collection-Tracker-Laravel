@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CollectionElementController;
 use App\Http\Controllers\CollectionEntityController;
-use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
 use App\Livewire\CollectionElement\CreateCollectionElement;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +37,5 @@ Route::middleware('auth')->group(function () {
         Route::resource('elements', CollectionElementController::class)
             ->except(['index', 'create', 'store']);
     });
-
-    Route::resource('sources', SourceController::class);
 });
 

@@ -33,7 +33,6 @@ class CreateCollectionElement extends Component
     /**
      * Show the form for creating a new resource.
      */
-    #[On('source-added')]
     public function render()
     {
         try {
