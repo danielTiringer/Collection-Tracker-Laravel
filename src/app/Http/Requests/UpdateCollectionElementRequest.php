@@ -44,9 +44,7 @@ class UpdateCollectionElementRequest extends FormRequest
                 Rule::in(
                     array_merge(
                         [0],
-                        Source::all()->map(function (Source $source) {
-                            return $source->id;
-                        })->toArray()
+                        Source::all()->pluck('id')->toArray()
                     )
                 ),
             ],
