@@ -9,7 +9,7 @@ use Livewire\Form;
 
 class SourceForm extends Form
 {
-    public string $source;
+    public string $source = '';
 
     /**
      * @throws ValidationException
@@ -19,7 +19,12 @@ class SourceForm extends Form
         $validatedFormFields = $this->validate();
 
         $source = new Source($validatedFormFields);
-        return $source->save();
+        $sourceSaved = $source->save();
+        if ($sourceSaved) {
+            $this->reset('source');
+        }
+
+        return $sourceSaved;
     }
 
     public function rules(): array
