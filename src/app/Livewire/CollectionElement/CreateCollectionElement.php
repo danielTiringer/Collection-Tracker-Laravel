@@ -8,9 +8,11 @@ use App\Models\CollectionEntity;
 use App\Models\Source;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 
 class CreateCollectionElement extends Component
@@ -44,7 +46,7 @@ class CreateCollectionElement extends Component
                 ->with('error', 'Not authorized to add element to collection');
         }
 
-        return view('livewire.collection_element.create')
+        return view('livewire.collection-element.create')
             ->extends('layout')
             ->section('content');
     }
@@ -53,7 +55,7 @@ class CreateCollectionElement extends Component
      * Store a newly created resource in storage.
      * @throws ValidationException
      */
-    public function save()
+    public function save(): RedirectResponse|Redirector
     {
         try {
             $this->authorize('createElement', $this->collection);
