@@ -7,7 +7,7 @@
 >
     <x-card
         class="p-10 max-w-lg mx-auto"
-        @click.away="showSourceModal = false"
+        @click.away="showModal = false"
     >
         <div class="bg-gray-50 border border-gray-200 p-10 rounded max-w-lg mx-auto">
             <header class="text-center">
