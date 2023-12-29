@@ -18,14 +18,7 @@
         @enderror
     </div>
 
-    <div class="flex flex-row justify-between">
-        <button
-            @click="showModal = false"
-            type="button"
-            class="py-2 px-3 text-black hover:text-red-500"
-        >
-            Cancel
-        </button>
+    <div class="w-full flex justify-end">
         <button class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black">
             Save
         </button>
