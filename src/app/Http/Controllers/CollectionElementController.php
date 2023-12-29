@@ -55,17 +55,6 @@ class CollectionElementController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(
-        UpdateCollectionElementRequest $request,
-        CollectionEntity $collection,
-        CollectionElement $element,
-    ): RedirectResponse
-    {
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(CollectionEntity $collection, CollectionElement $element): RedirectResponse
