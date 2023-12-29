@@ -43,18 +43,6 @@ class CollectionElementController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CollectionEntity $collection, CollectionElement $element): Factory|View|Application|RedirectResponse|ContractsApplication
-    {
-
-        return view('collection_element.edit', [
-            'element' => $element,
-            'sources' => Source::all(),
-        ]);
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(CollectionEntity $collection, CollectionElement $element): RedirectResponse
