@@ -3,10 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Enums\CollectionElementStatus;
-use App\Http\Requests\StoreCollectionElementRequest;
 use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
-use Illuminate\Validation\ValidationException;
 use Livewire\Form;
 use Livewire\WithFileUploads;
 
@@ -15,10 +13,11 @@ class CollectionElementForm extends Form
     use WithFileUploads;
 
     public CollectionEntity $collection;
+    public CollectionElement|null $element = null;
     public string $name;
     public string $description;
     public CollectionElementStatus $status = CollectionElementStatus::PLANNED;
-    public int $source;
+    public int|null $source;
     public $image;
 
     public function setCollection(CollectionEntity $collection): void
@@ -26,31 +25,13 @@ class CollectionElementForm extends Form
         $this->collection = $collection;
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function store(): bool
+    public function setElement(CollectionElement $element): void
     {
-        $validatedFormFields = $this->validate();
-
-        if ($this->image) {
-            $validatedFormFields['image'] = $this->image->store('images', 'public');
-        }
-
-        $element = new CollectionElement($validatedFormFields);
-        $element->collection_entity_id = $this->collection->id;
-
-        $elementSaved = $element->save();
-
-        if ($elementSaved && $validatedFormFields['source'] != 0) {
-            $element->sources()->attach([$validatedFormFields['source']]);
-        }
-
-        return $elementSaved;
-    }
-
-    public function rules(): array
-    {
-        return (new StoreCollectionElementRequest())->rules();
+        $this->element = $element;
+        $this->name = $element->name;
+        $this->description = $element->description;
+        $this->status = $element->status;
+        $this->source = $element->sources()->first()?->id;
+        $this->image = $element->image;
     }
 }

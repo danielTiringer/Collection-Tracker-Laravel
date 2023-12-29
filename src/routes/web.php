@@ -4,6 +4,7 @@ use App\Http\Controllers\CollectionElementController;
 use App\Http\Controllers\CollectionEntityController;
 use App\Http\Controllers\UserController;
 use App\Livewire\CollectionElement\CreateCollectionElement;
+use App\Livewire\CollectionElement\EditCollectionElement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +35,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/collections/{collection}')->group(function () {
         Route::get('/elements/create', CreateCollectionElement::class)->name('elements.create');
+        Route::get('/elements/{element}/edit', EditCollectionElement::class)->name('elements.edit');
         Route::resource('elements', CollectionElementController::class)
-            ->except(['index', 'create', 'store']);
+            ->only(['show', 'destroy']);
     });
 });
 

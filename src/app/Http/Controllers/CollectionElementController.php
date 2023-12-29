@@ -47,13 +47,6 @@ class CollectionElementController extends Controller
      */
     public function edit(CollectionEntity $collection, CollectionElement $element): Factory|View|Application|RedirectResponse|ContractsApplication
     {
-        try {
-            $this->authorize('update', $element);
-        } catch (AuthorizationException) {
-            return redirect()
-                ->route('collections.index')
-                ->with('error', 'Not authorized to edit element');
-        }
 
         return view('collection_element.edit', [
             'element' => $element,
@@ -70,60 +63,6 @@ class CollectionElementController extends Controller
         CollectionElement $element,
     ): RedirectResponse
     {
-        try {
-            $this->authorize('update', $element);
-        } catch (AuthorizationException) {
-            return redirect()
-                ->route('collections.index')
-                ->with('error', 'Not authorized to edit element');
-        }
-
-        $validatedFormFields = $request->validated();
-
-        if ($request->hasFile('image_file')) {
-            if ($element->image) {
-                $oldImageRemoved = $this->imageService->destroy($element->image);
-                if (!$oldImageRemoved) {
-                    return redirect()
-                        ->route('elements.show', $element)
-                        ->with('error', 'Element update failed');
-                }
-            }
-
-            $newImage = $this->imageService->store($request->file('image_file'));
-            if (!$newImage) {
-                return redirect()
-                    ->route('elements.show', $element)
-                    ->with('error', 'Element update failed');
-            }
-
-            $validatedFormFields['image'] = $newImage;
-        }
-
-        $elementUpdated = $element->update($validatedFormFields);
-        if (!$elementUpdated) {
-            return redirect()
-                ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
-                ->with('error', 'Element update failed');
-        }
-
-        $elementHasSource = $element->sources()->exists();
-
-        if ($validatedFormFields['source'] != 0) {
-            if (!$elementHasSource) {
-                $element->sources()->attach([$validatedFormFields['source']]);
-            } else {
-                $element->sources()->sync([$validatedFormFields['source']]);
-            }
-        }
-
-        if ($validatedFormFields['source'] == 0 && $elementHasSource) {
-            $element->sources()->sync([]);
-        }
-
-        return redirect()
-            ->route('elements.show', ['collection' => $element->entity, 'element' => $element])
-            ->with('success', 'Element updated successfully');
     }
 
     /**

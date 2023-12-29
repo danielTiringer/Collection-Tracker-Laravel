@@ -3,83 +3,83 @@
 namespace App\Livewire\CollectionElement;
 
 use App\Enums\CollectionElementStatus;
-use App\Livewire\Forms\CreateCollectionElementForm;
+use App\Livewire\Forms\EditCollectionElementForm;
+use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
 use App\Models\Source;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 
-class CreateCollectionElement extends Component
+class EditCollectionElement extends Component
 {
     use WithFileUploads;
 
     public CollectionEntity $collection;
-    public CreateCollectionElementForm $form;
+    public CollectionElement $element;
+    public EditCollectionElementForm $form;
     public Collection $sources;
     /** @var CollectionElementStatus[]  */
     public array $statuses;
 
-    public function mount(CollectionEntity $collection): void
+    public function mount(CollectionEntity $collection, CollectionElement $element): void
     {
         $this->collection = $collection;
+        $this->element = $element;
         $this->form->setCollection($collection);
+        $this->form->setElement($element);
         $this->sources = Source::all();
         $this->statuses = CollectionElementStatus::cases();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function render()
     {
         try {
-            $this->authorize('createElement', $this->collection);
+            $this->authorize('update', $this->element);
         } catch (AuthorizationException) {
             return redirect()
                 ->route('collections.index')
-                ->with('error', 'Not authorized to add element to collection');
+                ->with('error', 'Not authorized to edit element');
         }
 
-        return view('livewire.collection-element.create')
+        return view('livewire.collection-element.edit')
             ->extends('layout')
             ->section('content');
     }
 
     /**
-     * Store a newly created resource in storage.
      * @throws ValidationException
      */
-    public function save(): RedirectResponse|Redirector
+    public function edit(): RedirectResponse|Redirector
     {
         try {
-            $this->authorize('createElement', $this->collection);
+            $this->authorize('update', $this->element);
         } catch (AuthorizationException) {
             return redirect()
                 ->route('collections.index')
-                ->with('error', 'Not authorized to add element to collection');
+                ->with('error', 'Not authorized to edit element');
         }
 
-        $elementSaved = $this->form->store();
-        if (!$elementSaved) {
+        $elementUpdated = $this->form->update();
+        if (!$elementUpdated) {
             return redirect()
-                ->route('collections.show', $this->collection->id)
-                ->with('error', 'Element creation failed');
+                ->route('elements.show', [
+                    'collection' => $this->collection,
+                    'element' => $this->element,
+                ])
+                ->with('error', 'Element update failed');
         }
+
 
         return redirect()
-            ->route('collections.show', $this->collection->id)
-            ->with('success', 'Element created successfully');
-    }
-
-    #[On('source-added')]
-    public function updateSources(): void
-    {
-        $this->sources = Source::all();
+            ->route('elements.show', [
+                'collection' => $this->collection,
+                'element' => $this->element,
+            ])
+            ->with('success', 'Element updated successfully');
     }
 }

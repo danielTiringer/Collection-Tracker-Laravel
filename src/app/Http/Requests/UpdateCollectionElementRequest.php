@@ -39,7 +39,7 @@ class UpdateCollectionElementRequest extends FormRequest
                 new Enum(CollectionElementStatus::class)
             ],
             'source' => [
-                'required',
+                'nullable',
                 // Accept a number of 0 (not defined), or any ID in the Source table
                 Rule::in(
                     array_merge(
@@ -48,7 +48,7 @@ class UpdateCollectionElementRequest extends FormRequest
                     )
                 ),
             ],
-            'image_file' => [
+            'image' => [
                 'nullable',
                 File::image()
                     ->min('1kb')
