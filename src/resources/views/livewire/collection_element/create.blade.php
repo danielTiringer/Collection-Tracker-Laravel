@@ -1,6 +1,6 @@
 <div
-    x-data="{ 'showSourceModal': false }"
-    @keydown.escape="showSourceModal = false"
+    x-data="{ 'showModal': false }"
+    @keydown.escape="showModal = false"
 >
     <x-card class="p-10 max-w-lg mx-auto mt-24">
         <header class="text-center">
@@ -100,7 +100,7 @@
                 <button
                     class="text-black hover:text-red-500 border py-1 px-2 bg-white"
                     type="button"
-                    @click="showSourceModal = true"
+                    @click="showModal = true"
                 >
                     <i class="fa-solid fa-add"></i>
                 </button>

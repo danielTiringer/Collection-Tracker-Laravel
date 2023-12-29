@@ -27,6 +27,7 @@ class CreateSource extends Component
         $sourceSaved = $this->form->store();
         if ($sourceSaved) {
             $this->dispatch('source-added');
+            $this->dispatch('close-modal');
         }
     }
 }

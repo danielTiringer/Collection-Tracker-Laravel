@@ -1,8 +1,9 @@
 @props(['title'])
 <div
     class="absolute inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50"
-    x-show="showSourceModal"
-    x-on:source-added.window="showSourceModal = false"
+    x-on:close-modal.window="showModal = false"
+    x-show="showModal"
+    x-transition.duration
 >
     <x-card
         class="p-10 max-w-lg mx-auto"

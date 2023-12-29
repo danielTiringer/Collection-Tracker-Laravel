@@ -20,7 +20,7 @@
 
     <div class="flex flex-row justify-between">
         <button
-            @click="showSourceModal = false"
+            @click="showModal = false"
             type="button"
             class="py-2 px-3 text-black hover:text-red-500"
         >
