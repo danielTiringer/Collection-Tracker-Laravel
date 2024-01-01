@@ -94,17 +94,9 @@ class CollectionEntityController extends Controller
                 ->with('error', 'Not authorized to view collection');
         }
 
-        $elements = $collection->elements;
-        if ($request->filled('search')) {
-            $elements = (new CollectionElement)
-                ->filter(['search' => $request->get('search')])
-                ->where(['collection_entity_id' => $collection->id])
-                ->get();
-        }
-
         return view('collection_entity.show', [
             'collection' => $collection,
-            'elements' => $elements,
+            'elementCount' => $collection->elements()->count(),
         ]);
     }
 
