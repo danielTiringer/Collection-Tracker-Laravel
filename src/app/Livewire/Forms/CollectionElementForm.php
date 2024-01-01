@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use App\Enums\CollectionElementStatus;
 use App\Models\CollectionElement;
 use App\Models\CollectionEntity;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 use Livewire\WithFileUploads;
 
@@ -18,7 +19,7 @@ class CollectionElementForm extends Form
     public string $description;
     public CollectionElementStatus $status = CollectionElementStatus::PLANNED;
     public int|null $source;
-    public $image;
+    public TemporaryUploadedFile|string $image;
 
     public function setCollection(CollectionEntity $collection): void
     {
