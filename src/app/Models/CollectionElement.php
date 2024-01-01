@@ -47,12 +47,4 @@ class CollectionElement extends Model
     {
         return $this->belongsToMany(Source::class)->withTimestamps();
     }
-
-    public function scopeFilter($query, array $filters)
-    {
-        if (isset($filters['search'])) {
-            $query->whereRaw("UPPER(name) LIKE '%" . Str::upper($filters['search']) . "%'")
-                ->orWhereRaw("UPPER(description) LIKE '%" . Str::upper($filters['search']) . "%'");
-        }
-    }
 }

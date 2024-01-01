@@ -44,18 +44,8 @@
             </div>
         </x-card>
 
-        <x-search :route="route('collections.show', $collection->id)" placeholder="Search elements" />
-
-        @unless(count($elements) == 0)
-            <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mt-4">
-                @foreach($elements as $element)
-                    <x-element-card :element="$element" />
-                @endforeach
-            </div>
-        @else
-            <div class="mt-4">
-                <p>No elements to display</p>
-            </div>
-        @endunless
+        <livewire:collection-element.list-collection-elements
+            :collection="$collection"
+        />
     </div>
 @endsection
