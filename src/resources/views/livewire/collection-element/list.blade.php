@@ -11,6 +11,26 @@
                 placeholder="Search in collection"
             />
         </div>
+
+        <div class="mx-4">
+            <label for="source-filter" class="sr-only">Source Filter</label>
+            <select
+                id="source-filter"
+                class="border border-gray-200 rounded py-4 px-2 w-full bg-white"
+                wire:model.live="sourceDropdown"
+            >
+                <option value="0">No Source</option>
+                @foreach($sources as $source)
+                    <option value="{{ $source->id }}">{{ $source->source }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button
+            class="bg-black text-white rounded py-4 px-4 hover:bg-red-500"
+            wire:click="resetFields"
+        >
+            Reset
+        </button>
     </div>
 
     @unless(count($elements) == 0)
