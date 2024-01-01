@@ -56,8 +56,6 @@ class CollectionElement extends Model
         }
 
         if (isset($filters['source']) && !is_null($filters['source'])) {
-//            dd($filters['source']);
-//            dd($filters['collectionEntityId']);
             if ($filters['source'] == 0) {
                 $query->whereRaw(sprintf("
                     collection_elements.id NOT IN (
