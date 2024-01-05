@@ -26,6 +26,14 @@
                 @auth
                     <li>
                         <a
+                            href="{{ route('sources.index') }}"
+                            class="py-1 px-2 text-black hover:text-red-500"
+                        >
+                            <i class="fa-solid fa-gear"></i> Manage Sources
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             href="{{ route('collections.create') }}"
                             class="bg-red-500 hover:bg-black text-white py-1 px-2 rounded"
                         >

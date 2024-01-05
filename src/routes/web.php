@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CollectionElementController;
 use App\Http\Controllers\CollectionEntityController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\UserController;
 use App\Livewire\CollectionElement\CreateCollectionElement;
 use App\Livewire\CollectionElement\EditCollectionElement;
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/change-password', [UserController::class, 'updatePassword'])->name('users.update_password');
 
     Route::resource('collections', CollectionEntityController::class);
+
+    Route::resource('sources', SourceController::class);
 
     Route::prefix('/collections/{collection}')->group(function () {
         Route::get('/elements/create', CreateCollectionElement::class)->name('elements.create');
