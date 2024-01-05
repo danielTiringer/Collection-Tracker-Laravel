@@ -15,14 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $sourceOne = Source::factory()->create([
-            'name' => 'Ebay',
-        ]);
-
-        $sourceTwo = Source::factory()->create([
-            'name' => 'Facebook Marketplace',
-        ]);
-
         // password = "password"
         $testUserOne = User::factory()->create([
             'name' => 'Test User',
@@ -50,6 +42,17 @@ class DatabaseSeeder extends Seeder
         CollectionEntity::factory(2)->create([
             'user_id' => $testUserOne->id
         ]);
+
+        Source::factory()->create([
+            'source' => 'Ebay',
+            'user_id' => $testUserOne->id,
+        ]);
+
+        Source::factory()->create([
+            'source' => 'Facebook Marketplace',
+            'user_id' => $testUserOne->id,
+        ]);
+
 
         $testUserTwo = User::factory()->create([
             'name' => 'Another User',

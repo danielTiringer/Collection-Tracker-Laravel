@@ -17,6 +17,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property CollectionEntity[] $collectionEntities
+ * @property Source[] $sources
  */
 class User extends Authenticatable
 {
@@ -56,5 +58,10 @@ class User extends Authenticatable
     public function collectionEntities(): HasMany
     {
         return $this->hasMany(CollectionEntity::class, 'user_id');
+    }
+
+    public function sources(): HasMany
+    {
+        return $this->hasMany(Source::class, 'user_id');
     }
 }
